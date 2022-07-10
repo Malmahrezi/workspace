@@ -5,7 +5,7 @@
 #include <ctype.h>
 
 
-// main function takes 2 arguments, first one takes number of arguments, and the second one takes an array of strings
+// argc will represent the argument count the number on comman line argument and an array of string argv representing each of those comman line argument
 int main(int argc, string argv[])
 {
     if (argc != 2)
