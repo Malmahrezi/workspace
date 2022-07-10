@@ -1,68 +1,61 @@
-#include <cs50.h>
 #include <stdio.h>
-#include <string.h>
+#include <cs50.h>
 #include <ctype.h>
+#include <string.h>
 #include <math.h>
-
 int main(void)
 {
     //getting use input
-    string input = get_string("Text: ");
-    int n = strlen(input);
+    string text = get_string("Text: ");
 
     //count the number of letters, words, and sentences in the text
-    int lettercount = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (isalpha(input[i]))
-        {
-            lettercount++;
-        }
+    int i = strlen(text);
+    int letters = 0;
+    int words = 0;
+    int sentences = 0;
 
-    }
     //count the word by finding charecter before whitespace
-    int wordcount = 1;
-    for (int i = 0; i < n; i++)
+    for (int x = 0; x < i; x++)
     {
-        if (isspace(input[i]) && isgraph(input[i + 1]))
+        // Counting letters
+        char c = text[x];
+        if (isalpha(c) != 0)
         {
-            wordcount++;
+            letters++;
         }
-    }
-    //count sentences by finding . ! ? after letter
-    int sentcount = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (isalpha(input[i]) && input[i + 1] == '.')
-        {
-            sentcount++;
-        }
-        else if (isalpha(input[i]) && input[i + 1] == '!')
-        {
-            sentcount++;
-        }
-        else if (isalpha(input[i]) && input[i + 1] == '?')
-        {
-            sentcount++;
-        }
-    }
-    //calculating...
-    float l = (float) lettercount / wordcount * 100;
-    float s = (float) sentcount / wordcount * 100;
-    float grade = 0.0588 * l - 0.296 * s - 15.8;
-    printf("%i %i %i\n", lettercount, wordcount, sentcount);
 
-    //round up & print
-    if (grade < 1)
-    {
-        printf("Before Grade 1\n");
+        // Counting words
+        if (c == ' ')
+        {
+            words++;
+        }
+
+        // Counting Sentences
+        if (c == '.' || c == '!' || c == '?')
+        {
+            sentences++;
+        }
     }
-    else if (grade > 1 && grade < 16)
-    {
-        printf("Grade %i\n", (int)round(grade));
-    }
-    else
+
+    // To account for last word
+    words = words + 1;
+
+    //calculating...
+    float L = ((float)letters / (float)words) * 100;
+    float s = ((float)sentences / (float)words) * 100;
+    float subindex = 0.0588 * L - 0.296 * s - 15.8;
+    int index = round(subindex);
+    if (index > 16)
     {
         printf("Grade 16+\n");
     }
+    else if (index < 1)
+    {
+        printf("Before Grade 1\n");
+    }
+    else
+    {
+        printf("Grade %i\n", index);
+    }
+
 }
