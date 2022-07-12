@@ -1,6 +1,8 @@
+// Everything but the functions is a distrubution code provided by cs50
+
 #include <cs50.h>
 #include <stdio.h>
-#include<string.h>
+#include <string.h>
 
 // Max voters and candidates
 #define MAX_VOTERS 100
@@ -125,103 +127,111 @@ int main(int argc, string argv[])
     return 0;
 }
 
+// Function I coded:
+
 // Record preference if vote is valid
 bool vote(int voter, int rank, string name)
 {
-    // TODO
-     for(int i=0;i<candidate_count;i++) // check if candidate is valid
-     {
-   if
-      ( strcmp(name,candidates[i].name) == 0)
-   { preferences[voter][rank]=i;
-
-        return true;
+    // Main is iterating through each voter and vote
+    // Here we only need to check if vote is valid
+    for (int c = 0; c < candidate_count; c++)
+    {
+        if (strcmp(name, candidates[c].name) == 0)
+        {
+            // When valid record in preferences array
+            preferences[voter][rank] = c;
+            return true;
+        }
     }
-     }
-   return false;
+    return false;
 }
 
 // Tabulate votes for non-eliminated candidates
 void tabulate(void)
 {
-    // TODO
-     for(int i=0;i<voter_count;i++) // for looping over voters
+    // This loop counts the votes for each session of the election
+    // if vote was eliminated, it skips to next preference of that voter
+    for (int v = 0; v < voter_count; v++)
     {
-        for(int j=0;j<candidate_count;j++) // to loop over candidates
-  {
-      if(candidates[i].eliminated==false) // if candidate is not eliminated
-   {
-        candidates[preferences[i][j]].votes++;
+        for (int r = 0; r < candidate_count; r++)
+        {
+            int c = preferences[v][r];
+            if (candidates[c].eliminated == false)
+            {
+                candidates[c].votes++;
+                break;
+            }
+        }
     }
-  }
-    }
-
-    return;
 }
 
 // Print the winner of the election, if there is one
 bool print_winner(void)
 {
-    // TODO
-
-    // for highest votes
-    for(int i=0;i<candidate_count;i++) // loop thru candidates
-{
-    string most= candidates[i].name ;// for most votes
-    if(candidates[i].votes>voter_count/2) // more than 50 %
-{
-    printf("winner %s\n",most);
-}
-}
-
+    // Check each candidate for 50%+ of votes
+    for (int c = 0; c < candidate_count; c++)
+    {
+        if (candidates[c].votes > (voter_count / 2))
+        {
+            printf("%s\n", candidates[c].name);
+            return true;
+        }
+    }
     return false;
-
 }
 
 // Return the minimum number of votes any remaining candidate has
 int find_min(void)
 {
-    // TODO
-    int minvotes=voter_count; // minimum votes is equal to number of voters
-
-    for(int i=0;i<candidate_count;i++) // loop thru candidates
+    int voteCount = voter_count;
+    for (int c = 0; c < candidate_count; c++)
     {
-        if(candidates[i].eliminated==false && candidates[i].votes> minvotes)
-    {
-        minvotes=candidates[i].votes;
+        if (candidates[c].votes < voteCount && candidates[c].eliminated == false)
+        {
+            voteCount = candidates[c].votes;
+        }
     }
-    }
-
-    return 0;
+    return voteCount;
 }
-
-
 
 // Return true if the election is tied between all candidates, false otherwise
-bool is_tie(int minvotes)
+bool is_tie(int min)
 {
-    // TODO
+    // If the same number is running and have the min vote count, it's a tie
+    int tieCount = 0;
+    int onRun = 0;
 
-     for(int i=0;i<candidate_count;i++) // loop thru candidates
-     {
-         if(candidates[i].eliminated==false && candidates[i].votes!=minvotes) // candidates are not eliminated and their votes are not equal to minvotes then theres no tie, lowest gets eliminated
-         {
-      return false;
-}
-}
-return true; // but if votes are equal to minvotes then there is a tie
-}
-
-// Eliminate the candidate (or candidiates) in last place
-void eliminate(int minvotes)
-{
-    // TODO
-    for(int i=0;i<candidate_count;i++) // loop thru candidates
-        if (candidates[i].eliminated==false && candidates[i].votes==minvotes)
+    for (int c = 0; c < candidate_count; c++)
+    {
+        // when running and with min vote count add to both counters
+        if (candidates[c].eliminated == false && candidates[c].votes == min)
         {
-            candidates[i].eliminated=true;
+            tieCount++;
+            onRun++;
         }
+        // When running with more votes add only to running count
+        else if (candidates[c].eliminated == false)
+        {
+            onRun++;
+        }
+    }
+    // Checks for tie
+    if (tieCount == onRun)
+    {
+        return true;
+    }
+    return false;
+}
 
-    return;
-
+// Eliminate the candidate (or candidates) in last place
+void eliminate(int min)
+{
+    // Simple iteration eliminating all that have min vote count
+    for (int c = 0; c < candidate_count; c++)
+    {
+        if (candidates[c].eliminated == false && candidates[c].votes == min)
+        {
+            candidates[c].eliminated = true;
+        }
+    }
 }
