@@ -127,8 +127,6 @@ int main(int argc, string argv[])
     return 0;
 }
 
-// Function I coded:
-
 // Record preference if vote is valid
 bool vote(int voter, int rank, string name)
 {
