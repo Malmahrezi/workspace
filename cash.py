@@ -1,14 +1,14 @@
 from cs50 import get_float
 #set coin counter to 0
 coins = 0
-#ask for input; stop asking only when input is valid (i.e. > 0)
+#ask for input
 while True:
     change_dollar = get_float("Change (dollars): ")
     if change_dollar > 0:
         break
-#convert it into cents and round
+#convert
 change = round(int(change_dollar * 100))
-#for every coin sorted, the counter +1
+#the counter +1 for every coin start
 while change > 0:
     while change >= 25:
         coins += 1
