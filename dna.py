@@ -10,7 +10,7 @@ def main():
 
     # TODO: Read database file into a variable
     with open(argv[1]) as e:
-        reader = csv.DictReader(e)
+        reader = csv.reader(e)
         database = list(reader)
 
     # TODO: Read DNA sequence file into a variable
@@ -18,28 +18,31 @@ def main():
         sequence = f.read()
 
     # TODO: Find longest match of each STR in DNA sequence
-    matches = {}
+    matches = []
+    for i in range(1, len(database[0])):
+        matches.append(longest_match(sequence, database[0][i]))
 
-    #This results in "name" : 0
-    for i in database[0]:
-        matches[i] = (longest_match(sequence, i))
 
     # TODO: Check database for matching profiles
-    # Counter starts at 1, since there won't be a 'name' match
     suspect = 'No Match'
-    suspect_counter = 1
+    suspect_counter = 0
 
-    for i in range(len(database)):
-        for j in matches:
-            #Matches values are ints, need to cast them to strings for comparison
-            if str(matches[j]) == database[i][j]:
+    for i in range(1, len(database)):
+        for j in range(len(matches)):
+            #special note, the database is all strings, so int() is required to
+            #convert from string to int
+            if matches[j] == int(database[i][j+1]):
                 suspect_counter += 1
+
         if suspect_counter == len(matches):
-            #We've got the suspect!  No need to continue
-            suspect = database[i]['name']
+            # We've got the suspect!  No need to continue.
+            suspect = database[i][0]
             break
         else:
-            suspect_counter = 1
+            suspect_counter = 0
+    print(suspect)
+
+    return
 
     print(suspect)
 
