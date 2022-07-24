@@ -27,7 +27,8 @@ def main():
     for i in range(len(dict_list)):
         matches = 0
         for j in range(1, len(reader.fieldnames)):
-            if int(max_counts[j - 1]) == int(dict_list[i]  [reader.fieldnames[j]]):
+            if int(max_counts[j - 1]) == int(dict_list[i]
+[reader.fieldnames[j]]):
                 matches += 1
             if matches == (len(reader.fieldnames) - 1):
                 print(dict_list[i]['name'])
