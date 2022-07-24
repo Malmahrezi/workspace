@@ -1,37 +1,53 @@
-from csv import reader, DictReader
-from sys import argv, exit
-def main():
-    if len(argv) != 3:
-        print("Usage: python dna.py data.csv sequence.txt")
-        exit(1)
-    db_path = argv[1]
-    seq_path = argv[2]
-    with open(db_path, "r") as csvfile:
-        reader = DictReader(csvfile)
-        dict_list = list(reader)
-    with open(seq_path, "r") as file:
-        sequence = file.read()
-    max_counts = []
-    for i in range(1, len(reader.fieldnames)):
-        STR = reader.fieldnames[i]
-        max_counts.append(0)
-        for j in range(len(sequence)):
-            STR_count = 0
-            if sequence[j:(j + len(STR))] == STR:
-                k = 0
-                while sequence[(j + k):(j + k + len(STR))] == STR:
-                    STR_count += 1
-                    k += len(STR)
-                if STR_count > max_counts[i - 1]:
-                    max_counts[i - 1] = STR_count
-    for i in range(len(dict_list)):
-        matches = 0
-        for j in range(1, len(reader.fieldnames)):
-            if int(max_counts[j - 1]) == int(dict_list[i]
-[reader.fieldnames[j]]):
-                matches += 1
-            if matches == (len(reader.fieldnames) - 1):
-                print(dict_list[i]['name'])
+from sys import argv
+from sys import exit
+import csv
+
+def consecutive_count(str_sequence, dna_sequence):
+    str_max_count = 0
+    str_pattern = str_sequence
+
+    while str_pattern in dna_sequence:
+        str_max_count += 1
+        str_pattern += str_sequence
+    return str_max_count
+
+if len(argv) != 3:
+    print("Please include CSV and TXT file to command line")
+    exit(1)
+
+people = []
+str_sequence = []
+filename = argv[1]
+
+with open(filename) as file:
+    reader = csv.DictReader(file)
+    for name in reader:
+        people.append(name)
+
+for i in dict.keys(people[0]):
+    str_sequence.append(i)
+str_sequence.pop(0)
+
+
+txt = open(argv[2])
+dna_sequence = txt.read()
+
+str_count = dict.fromkeys(str_sequence, 0)
+
+for i in range(len(str_sequence)):
+    x = consecutive_count(str_sequence[i], dna_sequence)
+    str_count[str_sequence[i]] = x
+
+
+for i in range(len(people)):
+    match_count = 0
+    for j in range(len(str_sequence)):
+        if int(people[i][str_sequence[j]]) == int(str_count[str_sequence[j]]):
+            match_count += 1
+            if match_count == len(str_sequence):
+                print(people[i]['name'])
                 exit(0)
-print("No match")
-main()
+        else:
+            continue
+
+print("No Match")
