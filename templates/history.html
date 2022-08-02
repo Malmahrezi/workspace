@@ -1,36 +1,27 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Account History
+History
 {% endblock %}
 
 {% block main %}
-<h4>Account History</h4>
+
 <table class="table table-striped">
   <thead>
-    <tr>
-      <th scope="col">Transaction Id</th>
-      <th scope="col">Date</th>
-      <th scope="col">Transaction Type</th>
-      <th scope="col">Symbol</th>
-      <th scope="col">Number of Shares</th>
-      <th scope="col">Price Per Share</th>
-      <th scope="col">Transaction Total</th>
-    </tr>
+    <th>Symbol</th>
+    <th>Shares</th>
+    <th>Price</th>
+    <th>Transacted</th>
   </thead>
   <tbody>
-    {% for item in history %}
+    {% for stock in stocks %}
     <tr>
-      <td>{{ item["transaction_id"] }}</td>
-      <td>{{ item["date"] }}</td>
-      <td>{{ item["type"] }}</td>
-      <td>{{ item["symbol"] }}</td>
-      <td>{{ item["shares"] }} </td>
-      <td>${{ item["PPS"] }} </td>
-      <td>${{ item["Total_Amount"] }} </td>
+      <td>{{stock.symbol}}</td>
+      <td>{{stock.shares}}</td>
+      <td>{{stock.price | usd}}</td>
+      <td>{{stock.date}}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
-
 {% endblock %}
