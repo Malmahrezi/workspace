@@ -273,12 +273,3 @@ def sell():
         else:
             return render_template("apology.html", message="You are attempting to sell more shares than you own.")
 
-
-def errorhandler(e):
-    """Handle error"""
-    if not isinstance(e, HTTPException):
-        e = InternalServerError()
-    return apology(e.name, e.code)
-
-
-
