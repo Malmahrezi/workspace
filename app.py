@@ -1,6 +1,7 @@
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_session import Session
+from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
 from datetime import datetime
 
@@ -150,7 +151,8 @@ def login():
         rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
 
         # ensure username exists and password is correct
-
+        if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
+            return apology("invalid username and/or password")
 
         # remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -234,6 +236,7 @@ def register():
             return apology("password and password confirmation must match")
 
         # hash password
+        hash = pwd_context.hash(request.form.get("password"))
 
         # add user to database
         result = db.execute("INSERT INTO users (username, hash) VALUES (:username, :hash)", username=request.form.get("username"), hash=hash)
