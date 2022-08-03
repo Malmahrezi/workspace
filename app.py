@@ -42,102 +42,22 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-# Query database for transaction
-    rows = db.execute("""
-        SELECT symbol, SUM(shares) as totalShares
-        FROM transactions
-        WHERE user_id = :user_id
-        GROUP BY symbol
-        HAVING totalShares > 0;
-    """, user_id=session["user_id"])
-
-    holdings = []
-    grand_total = 0
-    # Loop through the data to get all of the user' info
-    for row in rows:
-        stock = lookup(row["symbol"])
-        holdings.append({
-            "symbol": stock["symbol"],
-            "name": stock["name"],
-            "shares": row["totalShares"],
-            "price": usd(stock["price"]),
-            "total": usd(stock["price"] * row["totalShares"])
-
-        })
-        # Get the grand total
-        grand_total += stock["price"] * row["totalShares"]
-
-    # Query database to get cash from user' table
-    rows = db.execute("SELECT cash FROM users WHERE id=:user_id", user_id=session["user_id"])
-    cash = rows[0]["cash"]
-    grand_total += cash
-
-    return render_template("index.html", holdings=holdings, cash=usd(cash),  grand_total=usd(grand_total))
-
+    """Show portfolio of stocks"""
+    return apology("TODO")
 
 
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
     """Buy shares of stock"""
-    if request.method == "POST":
-        # Ensure stock symbol and number of shares are provided
-        find_missing_errors = is_provided("symbol") or is_provided("shares")
-        if find_missing_errors:
-            return find_missing_errors
-        elif not request.form.get("shares").isdigit():
-            return apology("invalid number of shares")
-
-        # Search for the symbol
-        symbol = request.form.get("symbol").upper()
-        shares = int(request.form.get("shares"))
-        stock = lookup(symbol)
-        if stock is None:
-            return apology("invalid symbol")
-
-        # Query database for user' cash and update cash
-        rows = db.execute("SELECT Cash FROM users WHERE id=:id", id=session["user_id"])
-        cash = rows[0]["cash"]
-
-        updated_cash = cash - shares * stock['price']
-        if updated_cash < 0:
-            return apology("can't afford")
-        db.execute("UPDATE users SET cash=:updated_cash WHERE id=:id",
-                    updated_cash=updated_cash,
-                    id=session["user_id"])
-
-        # Query database for user' transaction
-        db.execute("""
-            INSERT INTO transactions
-                (user_id, symbol, shares, price)
-            VALUES (:user_id, :symbol, :shares, :price)
-        """,
-            user_id = session["user_id"],
-            symbol = stock["symbol"],
-            shares = shares,
-            price = stock["price"]
-        )
-        flash("Bought!")
-
-        return redirect("/")
-    else:
-        return render_template("buy.html")
+    return apology("TODO")
 
 
 @app.route("/history")
 @login_required
 def history():
     """Show history of transactions"""
-    # Query database for displying everything
-    transactions = db.execute("""
-        SELECT symbol, shares, price, transacted
-        FROM transactions
-        WHERE user_id=:user_id
-    """, user_id=session["user_id"])
-
-    for i in range(len(transactions)):
-        transactions[i]["price"] = usd(transactions[i]["price"])
-    return render_template("history.html", transactions=transactions)
+    return apology("TODO")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -191,110 +111,17 @@ def logout():
 @login_required
 def quote():
     """Get stock quote."""
-   if request.method == "POST":
-        result_check = is_provided("symbol")
-        if result_check is not None:
-            return result_check
-        symbol = request.form.get("symbol").upper()
-        # Search for the stock in the data
-        stock = lookup(symbol)
-        if stock is None:
-            return apology("invalid symbol", 400)
-        return render_template("quoted.html", stock={
-            'name': stock['name'],
-            'symbol': stock['symbol'],
-            'price': usd(stock['price'])
-        })
-
-
-    else:
-        return render_template("quote.html")
+    return apology("TODO")
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-     if request.method == "POST":
-        # Ensure username password and confiemation was provided
-        result_check = is_provided("username") or is_provided("password") or is_provided("confirmation")
-
-        if result_check != None:
-            return result_check
-
-        # Validate the user' password
-        validation_errors = validate(request.form.get("password"))
-        if validation_errors:
-            return validation_errors
-
-
-        # Ensure password and confirmation match
-        if request.form.get("password") != request.form.get("confirmation"):
-            return apology("passwords must match")
-
-        # Query database for username
-        try:
-            prim_key = db.execute("INSERT INTO users (username, hash) VALUES (:username, :hash)",
-                    username=request.form.get("username"),
-                    hash=generate_password_hash(request.form.get("password")))
-        except:
-            return apology("username already exixt", 403)
-
-        if prim_key is None:
-            return apology("registration error", 403)
-
-        # Remember which user has logged in
-        session["user_id"] = prim_key
-
-        flash("Registered!")
-        return redirect("/")
-
-
-
-    else:
-        return render_template("register.html")
-
+    return apology("TODO")
 
 
 @app.route("/sell", methods=["GET", "POST"])
 @login_required
 def sell():
     """Sell shares of stock"""
-    if request.method == "POST":
-        # Ensure username password and confiemation was provided
-        result_check = is_provided("username") or is_provided("password") or is_provided("confirmation")
-
-        if result_check != None:
-            return result_check
-
-        # Validate the user' password
-        validation_errors = validate(request.form.get("password"))
-        if validation_errors:
-            return validation_errors
-
-
-        # Ensure password and confirmation match
-        if request.form.get("password") != request.form.get("confirmation"):
-            return apology("passwords must match")
-
-        # Query database for username
-        try:
-            prim_key = db.execute("INSERT INTO users (username, hash) VALUES (:username, :hash)",
-                    username=request.form.get("username"),
-                    hash=generate_password_hash(request.form.get("password")))
-        except:
-            return apology("username already exixt", 403)
-
-        if prim_key is None:
-            return apology("registration error", 403)
-
-        # Remember which user has logged in
-        session["user_id"] = prim_key
-
-        flash("Registered!")
-        return redirect("/")
-
-
-
-    else:
-        return render_template("register.html")
-
+    return apology("TODO")
