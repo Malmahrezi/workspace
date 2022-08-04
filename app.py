@@ -62,7 +62,7 @@ def buy():
         symbol = request.form.get("symbol")
         shares = int(request.form.get("shares"))
 
-         if not symbol:
+        if not symbol:
             return apology("Must Give Symbol")
 
         stock = lookup(symbol.upper())
