@@ -63,7 +63,7 @@ def buy():
         shares = int(request.form.get("shares"))
 
          if not symbol:
-            return aplology("Must Give Symbol")
+            return apology("Must Give Symbol")
 
         stock = lookup(symbol.upper())
 
@@ -73,13 +73,13 @@ def buy():
         if shares < 0:
             return apology("Share Not allowed")
 
-        transaction_value = shres * stock["price"]
+        transaction_value = shares * stock["price"]
 
         user_id = session["user_id"]
         user_cash_db = db.execute("SELECT cash FROM users WHERE id = :id", id=user_id)
         user_cash = user_cash_db[0]["cash"]
 
-        if user_cash < trnsaction_value:
+        if user_cash < transaction_value:
             return apology("Not Enogh Money")
 
 
@@ -189,7 +189,7 @@ def quote():
         symbol = request.form.get("symbol")
 
         if not symbol:
-            return aplology("Must Give Symbol")
+            return apology("Must Give Symbol")
 
         stock = lookup(symbol.upper())
 
@@ -245,14 +245,14 @@ def sell():
     if request.method == "GET":
         user_id = session["user_id"]
         symbols_user = db.execute("SELECT symbol FROM transaction WHERE user_id = :id GROUP BY symbol HAVING SUM(shares) > 0", id=user_id)
-        return render_template("sell.html", symbols = [row["symbols"] for row in symbols_user])
+        return render_template("sell.html", symbols = [row["symbol"] for row in symbols_user])
 
     else:
          symbol = request.form.get("symbol")
-        shares = int(request.form.get("shares"))
+         shares = int(request.form.get("shares"))
 
-         if not symbol:
-            return aplology("Must Give Symbol")
+        if not symbol:
+            return apology("Must Give Symbol")
 
         stock = lookup(symbol.upper())
 
@@ -262,15 +262,13 @@ def sell():
         if shares < 0:
             return apology("Share Not allowed")
 
-
-
-        transaction_value = shres * stock["price"]
+        transaction_value = shares * stock["price"]
 
         user_id = session["user_id"]
         user_cash_db = db.execute("SELECT cash FROM users WHERE id = :id", id=user_id)
         user_cash = user_cash_db[0]["cash"]
 
-        user_shares = db.execute("SELECT shares FROM transactions WHERE id=:id AND symbol = :symbol GROUP BY symbol", id=user_id, symbol)
+        user_shares = db.execute("SELECT shares FROM transactions WHERE user_id=:id AND symbol = :symbol GROUP BY symbol", id=user_id, symbol=symbol)
         user_shares_real = user_shares[0]["shares"]
 
         if shares > user_shares_real:
@@ -292,4 +290,3 @@ def sell():
         flash("Sold!")
 
         return redirect("/")
-
