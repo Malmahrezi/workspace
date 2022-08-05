@@ -70,7 +70,7 @@ def buy():
             if stock == None:
                 return apology("Symbol Does Not Exist")
 
-            if shares < 0:
+            if shares <= 0:
                 return apology("Share Not allowed")
 
             transaction_value = shares * stock["price"]
