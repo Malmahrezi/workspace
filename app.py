@@ -249,8 +249,7 @@ def sell():
 
     else:
          symbol = request.form.get("symbol")
-
-    shares = int(request.form.get("shares"))
+         shares = int(request.form.get("shares"))
 
     if not shares.isdigit():
             return apology("You cannot purchase partial shares.")
