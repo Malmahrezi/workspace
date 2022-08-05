@@ -70,7 +70,7 @@ def buy():
             if stock == None:
                 return apology("Symbol Does Not Exist")
 
-            if shares <= 0:
+            if shares < 0:
                 return apology("Share Not allowed")
 
             transaction_value = shares * stock["price"]
@@ -93,10 +93,10 @@ def buy():
 
 
         #INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);
-    db.execute("INSERT INTO transactions (user_id, symbol, shares, price, date) VALUE (?, ?, ?, ?, ?)", user_id, stock["symbol"], shares, stock["price"], date)
-    flash("Bought!")
+            db.execute("INSERT INTO transactions (user_id, symbol, shares, price, date) VALUE (?, ?, ?, ?, ?)", user_id, stock["symbol"], shares, stock["price"], date)
+            flash("Bought!")
 
-    return redirect("/")
+            return redirect("/")
 
 
 @app.route("/history")
