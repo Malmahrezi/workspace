@@ -249,7 +249,7 @@ def sell():
 
     else:
          symbol = request.form.get("symbol")
-         shares = int(request.form.get("shares"))
+         
          shares = request.form.get("shares")
 
     if not shares.isdigit():
