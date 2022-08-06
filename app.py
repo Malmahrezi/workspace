@@ -7,6 +7,7 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 from helpers import apology, login_required, lookup, usd
+from flask import jsonify
 
 # Configure application
 app = Flask(__name__)
@@ -54,48 +55,49 @@ def index():
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
+
     """Buy shares of stock"""
     if request.method == "GET":
         return render_template("buy.html")
 
     else:
-            symbol = request.form.get("symbol")
-            shares = int(request.form.get("shares"))
+        symbol = request.form.get("symbol")
+        shares = int(request.form.get("shares"))
 
-            if not symbol:
-                return apology("Must Give Symbol")
+        if not symbol:
+            return apology("Must Give Symbol")
 
-            stock = lookup(symbol.upper())
+        stock = lookup(symbol.upper())
 
-            if stock == None:
-                return apology("Symbol Does Not Exist")
+        if stock == None:
+            return apology("Symbol Does Not Exist")
 
-            if shares < 0:
-                return apology("Share Not allowed")
+        if shares < 0:
+            return apology("Share Not allowed")
 
-            transaction_value = shares * stock["price"]
-            user_id = session["user_id"]
-            user_cash_db = db.execute("SELECT cash FROM users WHERE id = :id", id=user_id)
-            user_cash = user_cash_db[0]["cash"]
+        transaction_value = shares * stock["price"]
+        user_id = session["user_id"]
+        user_cash_db = db.execute("SELECT cash FROM users WHERE id = :id", id=user_id)
+        user_cash = user_cash_db[0]["cash"]
 
-            if user_cash < transaction_value:
-                return apology("Not Enogh Money")
+        if user_cash < transaction_value:
+            return apology("Not Enogh Money")
 
 
-            uptd_cash = user_cash - transaction_value
+        uptd_cash = user_cash - transaction_value
 
         #UPDATE table_name SET column1 = value1, column2 = value2, ...WHERE condition
-            db.execute("UPDATE users SET cash = ? WHERE id = ?", uptd_cash, user_id)
+        db.execute("UPDATE users SET cash = ? WHERE id = ?", uptd_cash, user_id)
 
-            date = datetime.datetime.now()
+        date = datetime.datetime.now()
 
 
 
         #INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);
-            db.execute("INSERT INTO transactions (user_id, symbol, shares, price, date) VALUE (?, ?, ?, ?, ?)", user_id, stock["symbol"], shares, stock["price"], date)
-            flash("Bought!")
+        db.execute("INSERT INTO transactions (user_id, symbol, shares, price, date) VALUES (?, ?, ?, ?, ?)", user_id, stock["symbol"], shares, stock["price"], date)
+        flash("Bought!")
 
-            return redirect("/")
+        return redirect("/")
 
 
 @app.route("/history")
@@ -287,7 +289,7 @@ def sell():
 
 
         #INSERT INTO table_name (column1, column2, column3, ...) VALUES (value1, value2, value3, ...);
-    db.execute("INSERT INTO transactions (user_id, symbol, shares, price, date) VALUE (?, ?, ?, ?, ?)", user_id, stock["symbol"], (-1)*shares, stock["price"], date)
+    db.execute("INSERT INTO transactions (user_id, symbol, shares, price, date) VALUES (?, ?, ?, ?, ?)", user_id, stock["symbol"], (-1)*shares, stock["price"], date)
 
     flash("Sold!")
 
