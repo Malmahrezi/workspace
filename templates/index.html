@@ -11,7 +11,7 @@
                 <th scope="col">Symbols</th>
                 <th scope="col">Shares</th>
                 <th scope="col">Price</th>
-                <th scope="col"></th>
+                <th scope="col">TOTAL</th>
             </tr>
         </thead>
         <tbody>
@@ -24,13 +24,13 @@
                 </tr>
             {% endfor %}
         </tbody>
-            <tfoot>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <th scope="1">Total Amount</th>
-                    <th scope="1">{{ cash }}</th>
-                </tr>
-            </tfoot>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <th scope="1">Cash</th>
+                <th scope="1">{{ cash }}</th>
+            </tr>
+        </tfoot>
     </table>
 {% endblock %}
