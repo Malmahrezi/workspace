@@ -1,0 +1,148 @@
+.text_input input[type="text"] {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 250px 0;
+    width: 500px;
+    height: 35px;
+    border-radius: 25px;
+    border: 3px grey solid;
+    font-size: 20px;
+    padding: 5px;
+    
+}
+.text_input input:focus {
+    background-color: grey;
+  }
+.text_input:hover {
+    background-color: khaki;
+    border-radius: 25px;
+}
+
+
+.search_box input[type="submit"] {
+    text-align: center;
+    color: white;
+    font-weight: 300;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: medium;
+    font-style: normal;
+    background-color: blue;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-130%);
+    margin: 320px 0;
+    padding:10px 10px;
+    border-radius: 5px;
+}
+
+.lucky input[type="submit"]{
+    text-align: center;
+    color: white;
+    font-weight: 300;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: medium;
+    font-style: normal;
+    background-color: blue;
+    position: absolute;
+    left: 50%;
+    transform: translateX(20%);
+    margin: 320px 0;
+    padding: 10px 10px;
+    border-radius: 5px;
+    
+}
+
+.topright {
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+    }
+
+
+
+.label {
+    color: rgb(218, 32, 32);
+    margin-left: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    } */
+    
+html, body {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    }
+    
+.navbar {
+    padding: 20px;
+    text-align: right;
+    size: default;
+    }
+    
+.navbar a {
+    margin: 0 10px;
+    color:black;
+    text-decoration: none;
+    }
+    
+.navbar a:hover{
+    text-decoration: underline;
+    }
+    
+.content {
+    margin-top:100px;
+    text-align:center;
+    
+    }
+    
+#textbox {
+    font-size: large;
+    height: 30px;
+    width: 500px;
+    border-radius: 25px;
+    }
+    
+.graybar{
+    background-size: 75% 50%;
+    background: #f1f1f1;
+    font: 13px/27px Arial,sans-serif;
+    height: 60px;
+    width: 100%;
+    }
+    
+#image {
+    height: 33px;
+    width: 92px;
+    margin: 15px;
+    }  
+        
+.margin { 
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+       
+    }   
+    
+    
+body {
+    font-family: arial,sans-serif;
+    }
+
+
+.search_box input[type="submit"] {
+    text-align: center;
+    color: white;
+    font-weight: 300;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: medium;
+    font-style: normal;
+    background-color: blue;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-130%);
+    margin: 320px 0;
+    padding:10px 10px;
+    border-radius: 5px;
+    }

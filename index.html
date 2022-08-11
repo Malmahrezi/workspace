@@ -2,11 +2,27 @@
 <html lang="en">
     <head>
         <title>Search</title>
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
         <form action="https://google.com/search">
-            <input type="text" name="q">
-            <input type="submit" value="Google Search">
+            <div class="text_input">
+                <input type="text" name="q">
+            </div>
+            <div class="search_box">
+                <input type="submit" value="Google Search">
+            </div>
+        </form>  
+        <form action="https://www.google.com/doodles/">
+            <div class="lucky">
+                <input type="submit" value="I'm Feeling Lucky">
+            </div>
+        </form>
+        <form>
+            <div class="topright">
+                <a href="http://127.0.0.1:5500/finance/CS50W/search/search/image.html">Image Search</a>
+                <a href="http://127.0.0.1:5500/finance/CS50W/search/search/advanced.html">Advanced Search</a>
+              </div>
         </form>
     </body>
 </html>
