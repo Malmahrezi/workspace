@@ -108,28 +108,6 @@ def history():
     transactions_db = db.execute("SELECT * FROM transactions WHERE user_id = :id", id=user_id)
     return render_template("history.html", transactions = transactions_db)
 
-@app.route("/add_cash", methods=["GET", "POST"])
-@login_required
-def add_cash():
-    """User can add cash"""
-    if request.method == "GET":
-        return render_template("add.html")
-    else:
-        new_cash = int(request.form.get("new_cash"))
-
-        if not new_cash:
-            return apology("You Must Give Money")
-
-        user_id = session["user_id"]
-        user_cash_db = db.execute("SELECT cash FROM users WHERE id = :id", id=user_id)
-        user_cash = user_cash_db[0]["cash"]
-
-        uptd_cash = user_cash + new_cash
-
-        #UPDATE table_name SET column1 = value1, column2 = value2, ...WHERE condition
-        db.execute("UPDATE users SET cash = ? WHERE id = ?", uptd_cash, user_id)
-
-        return redirect("/")
 
 
 @app.route("/login", methods=["GET", "POST"])
