@@ -1,6 +1,12 @@
-    CS50 Web Programming with Python and JavaScript This is a Django App for ordering from Chipotle Mexican Grill online
-    
-    
+    CS50 Web Programming with Python and JavaScript 
+	
+	
+	This is a Django App for ordering from Chipotle Mexican Grill online
+
+	Distinctiveness and Complexity: 
+
+	I do believe that my project satisfies the distinctiveness and complexity requirements because it does what the restaurants needs entirely. The app allows both customer and seller to have the maximum freedom to choose whatever they want to add and delete from both bills and menu. Also, the app allows the seller to rearrange the prices whenever needed. The page that contains the list of all orders details, explain to the customer in details what they are about to confirm in the order, and how the total price they will play. Moreover, the seller has the ability to confirm the final order details.
+
     
     Chipotle Mexican Grill restaurant website that I have created for both owner of the restaurant and customer. The owner can use Django Admin Page to create more Chipotle menu options and toppings. Also, they can decide how many toppings the customer can have and whether it is big or small. Also, the Owner have the authority to confirm whatever order the customer made by approving pending orders. Also, the owner has the full control of prices of all listings in the menu. Each time the owner decides to create new listing in his menu, The admin page is a very simple straight forward page that allow users to add whatever they want in term of the type of the food they want to add, the amount of the mo0ney they want to put for each new listing and also whether if it is big or small listing option. Moreover, the page allows the admin of to change or delete any selection has been made previously in a very practical and precise way. 
 	
