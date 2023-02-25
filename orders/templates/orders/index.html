@@ -1,0 +1,104 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+    Menu
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 shopping-cart">
+                <h3>Shopping Cart</h3>
+                <ol>
+                    {% for order in shopping_cart %}
+                        {% if order.approved == "pending" or order.approved == "approved" %}
+                            <li>{{ order.order }} {{ order.toppingsList }} <b>${{ order.price }}</b> <span class="{{ order.approved }}">&#9679{{ order.approved }}</span></li>
+                        {% else %}
+                            <li>{{ order.order }} {{ order.toppingsList }} <b>${{ order.price }}</b></li>
+                        {% endif %}
+                    {% empty %}
+                        <li>Your cart is empty!</li>
+                    {% endfor %}
+                </ol>
+                {% if shopping_cart %}
+                    <form action="{% url 'customer_order' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="total" value={{ total }}><p>Total: ${{ total }}</p>
+                        <button class="btn btn-primary">Place Order</button> 
+                    </form>
+                {% endif %}
+            </div>
+            <div class="col">
+                <h2 id="menu">Our Menu</h2>
+                <hr>
+                <div class="row burrito">
+                    <div class="col-8">
+                        <h4>Burrito Bowl</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Small</th>
+                                <th scope="col">Large</th>
+                                </tr>
+                            </thead>
+                            {% for burrito in burrito_bowl %}
+                                <tbody>
+                                    <tr>
+                                    <td>{{ burrito.name }}</td>
+                                    <td><a id={{ burrito.name }} name="Small Burrito Bowl {{ burrito.name }}" class="toppings">${{ burrito.small }}</a></td>
+                                    <td><a id={{ burrito.name }} name="Large Burrito Bowl {{ burrito.name }}" class="toppings">${{ burrito.large }}</a></td>
+                                    </tr>
+                                </tbody>
+                            {% endfor %}
+                        </table>
+                        <h4>Burrito Wrap</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Small</th>
+                                <th scope="col">Large</th>
+                                </tr>
+                            </thead>
+                            {% for burrito in burrito_wraps %}
+                                <tbody>
+                                    <tr>
+                                    <td>{{ burrito.name }}</td>
+                                    <td><a id={{ burrito.name }} name="Small Burrito Wrap {{ burrito.name }}" class="toppings">${{ burrito.small }}</a></td>
+                                    <td><a id={{ burrito.name }} name="Large Burrito Wrap {{ burrito.name }}" class="toppings">${{ burrito.large }}</a></td>
+                                    </tr>
+                                </tbody>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="col">
+                        <h4>Toppings</h4>
+                        {% for topping in toppings %}
+                            <input type="checkbox" name="toppingCheck" class="toppingOption" value="{{ topping }}"> {{ topping }}<br>
+                        {% endfor %}
+                    </div>
+                </div>
+                <h4>Subs</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Small</th>
+                        <th scope="col">Large</th>
+                        </tr>
+                    </thead>
+                    {% for sub in subs %}
+                        <tbody>
+                            <tr>
+                            <td>{{ sub.name }}</td>
+                            <td><a href="{% url 'order' order_name=sub.name price=sub.small toppingsList="" %}" class="toppings">${{ sub.small }}</a></td>
+                            <td><a href="{% url 'order' order_name=sub.name price=sub.large toppingsList="" %}" class="toppings">${{ sub.large }}</a></td>
+                            </tr>
+                        </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
