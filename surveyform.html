@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey_Form</title>
+    <meta name="viewport" content="width=device-width, initial-scaled=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="surveyform.css">
+</head>
+<body>
+    <div class="heading">
+        <h1 id="head">Computer Science Exploration Survey Questions</h1>
+        <h2 id="subheading"><i>Thank you for participating in our survey</i></h2>
+    </div>
+    <form>
+        <div id="content1">
+            <label>Name</label> <br><br>
+            <input type="name" name="name" placeholder="Enter your name" class="box"> <br><br>
+            <label>City</label> <br><br>
+            <input type="city" name="city" placeholder="Enter your city" class="box"> <br><br>
+            <label>Age (optional)</label> <br><br>
+            <input type="age" name="age" placeholder="Enter your age" class="box"> <br><br>
+            <label>What computer science career you are interested in?</label> <br><br>
+        
+        <div id="option1">
+            <select>
+                <option name="Select Your Role">Select career</option>
+                <option value="Student">Software Developer</option>
+                <option value="Full Time Job">Web Developer</option>
+                <option value="Full Time Learner">Information Security Analyst</option>
+                <option value="Prefer Not to say">Systems Architect</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <br>
+        <label id="head1">What will you specialize in if you have the chance?</label> <br> <br>
+        <input type="radio" name="radio" class="larger">&nbsp&nbsp&nbspMachine Learning<br> <br>
+        <input type="radio" name="radio" class="larger">&nbsp&nbsp&nbspArtificial Intelligence<br> <br>
+        <input type="radio" name="radio" class="larger">&nbsp&nbsp&nbspDeep Learning<br> <br>
+        <label>What is the best way of learning for you?</label> <br>
+        <div id="option2">
+            <select>
+                <option name="Select an option">Select an option</option>
+                <option value="Challenged">Online</option>
+                <option value="Projects">In class</option>
+                <option value="Community">Blended Learning</option>
+                <option value="Open Source">From the books</option>
+            </select>
+        </div>
+        <br><br>
+        <label id="head2">Select all computer science subjects that are hard in you opinion?</label> (check all that apply)</label> <br>
+        <div id="content2">
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspTheoretical models of computation</label> <br><br>
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspComputer architecture</label><br><br>
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspAlgorithms and notions of efficient computation</label><br><br>
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspSystem design</label><br><br>
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspNetwork design</label><br><br>
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspProgramming language design and implementation</label><br><br>
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspJavaScript</label><br><br>
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspOperating System</label><br><br>
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspData Structure</label><br><br>
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspLinear Algebra</label><br><br>
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspDifferential Equations</label><br><br>
+            <input type="checkbox" name="checkbox" class="larger"><label>&nbsp&nbsp&nbspProbability and Statistics</label><br><br>
+        </div>
+        <label id="head2">Any unlisted subjects?</label> <br><br>
+        <textarea placeholder="Enter those subjects here..."></textarea> <br>
+        <button><h3>Submit</h3></button>
+    </form>
+</body>
+</html>
